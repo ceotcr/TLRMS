@@ -74,10 +74,10 @@ export const handleForgotPassword = async (req, res) => {
 
         const handlebarOptions = {
             viewEngine: {
-                partialsDir: path.resolve('./src/views/'),
+                partialsDir: path.resolve('../views/'),
                 defaultLayout: false,
             },
-            viewPath: path.resolve('./src/views/'),
+            viewPath: path.resolve('../views/')
         };
 
         transporter.use('compile', hbs(handlebarOptions));

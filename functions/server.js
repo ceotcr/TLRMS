@@ -7,6 +7,7 @@ import { auth } from './controllers/auth.js';
 import { getprofile } from './controllers/getprofile.js';
 import { handleForgotPassword } from './controllers/forgotPassword.js';
 import { handleResetPassword } from './controllers/resetPassword.js';
+import { https } from 'firebase-functions';
 dotenv.config();
 const port = process.env.PORT || 8000;
 export const app = express();
@@ -19,12 +20,15 @@ app.get('/', (req, res) => {
 
 app.get('/profile', auth, getprofile);
 
-app.post('/v1/auth/signup', handleRegister);
-app.get('/v1/auth/verify-email', handleVerifyEmail);
-app.post('/v1/auth/login', handleLogin);
-app.post('/v1/auth/forgot-password', handleForgotPassword);
-app.post('/v1/auth/reset-password', handleResetPassword);
+app.post('/api/v1/auth/signup', handleRegister);
+app.get('/api/v1/auth/verify-email', handleVerifyEmail);
+app.post('/api/v1/auth/login', handleLogin);
+app.post('/api/v1/auth/forgot-password', handleForgotPassword);
+app.post('/api/v1/auth/reset-password', handleResetPassword);
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
-});
+
+export const appFunction = https.onRequest(app);
+
+// app.listen(port, () => {
+//     console.log(`Server is running at http://localhost:${port}`);
+// });
