@@ -25,7 +25,7 @@ export const handleLogin = async (req, res) => {
             throw { "status": 401, "msg": "Invalid Credentials" };
         }
         const accessToken = jwt.sign({ username: user.username }, process.env.JWT_SECRET, { expiresIn: '3d' });
-        res.status(200).json({ "accessToken": accessToken });
+        res.status(200).json({ "status": "success", "accessToken": accessToken, "user": { "id": user.id, "username": user.username, "email": user.email, "role": user.role, "phone": user.phone } });
     } catch (error) {
         console.error(error);
         res.status(error.status || 500).json({ "msg": error.msg || "An error occurred while logging in." });
