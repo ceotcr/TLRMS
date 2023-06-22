@@ -51,8 +51,14 @@ The API is configured to allow Cross-Origin Resource Sharing (CORS) requests fro
 
 This project is set up to be deployed as a Firebase Cloud Function. Use the following scripts in the package.json file for deployment:
 
-- `npm run deploy`: Deploys the functions to Firebase.
-- `npm run logs`: Displays the logs for the deployed functions.
+- ```shell
+  npm run deploy
+  ``` 
+  > Deploys the functions to Firebase.
+- ```shell
+  npm run logs
+  ```
+  > Displays the logs for the deployed functions.
 
 ## Project Structure
 
@@ -64,10 +70,22 @@ This project is set up to be deployed as a Firebase Cloud Function. Use the foll
 
 The following development scripts are available:
 
-- `npm run serve`: Starts the Firebase emulators for functions.
-- `npm run shell`: Runs the Firebase Functions shell.
-- `npm run start`: Starts the Firebase Functions shell.
-- `npm run dev`: Starts the server using nodemon for development.
+- ```shell
+  npm run serve
+  ```
+  > Starts the Firebase emulators for functions.
+- ```shell
+  npm run shell
+  ```
+  > Runs the Firebase Functions shell.
+- ```shell
+  npm run start
+  ```
+  > Starts the Firebase Functions shell.
+- ```shell
+  npm run dev
+  ```
+  > Starts the server using nodemon for development.
 
 ## Additional Notes
 
