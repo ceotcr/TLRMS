@@ -6,8 +6,14 @@ export const getTimetable = async (req, res) => {
         if (!req.user) {
             return res.status(401).json({ "msg": "Unauthorized" });
         }
+        const { forclass } = req.body;
+        if (!forclass) {
+            return res.status(400).json({ "msg": "Bad Request" });
+        }
         const connection = await dbpool.getConnection();
-        const [rows] = await connection.execute(`SELECT * FROM timetable`);
+        const sql = `SELECT * FROM timetable WHERE forclass = ?`;
+        const values = [forclass];
+        const [rows] = await connection.execute(sql, values);
         connection.release();
         res.json(rows);
     } catch (err) {

@@ -11,7 +11,7 @@ import { handleResetPassword } from './controllers/resetPassword.js';
 import { https } from 'firebase-functions';
 import { addEvent, getEvents } from './controllers/events.js';
 import { addTimetable, getTimetable } from './controllers/timetable.js';
-import { deleteCourse, getCourse, updateCourse } from './controllers/course.js';
+import { deleteCourse, getCourses, updateCourse, addCourse } from './controllers/course.js';
 dotenv.config();
 const port = process.env.PORT || 8000;
 export const app = express();
@@ -39,9 +39,9 @@ app.get('/api/v1/events', auth, getEvents);
 app.post('/api/v1/events', auth, addEvent);
 app.get('/api/v1/timetable', auth, getTimetable);
 app.post('/api/v1/timetable', auth, addTimetable);
-app.get('/api/v1/course', auth, getCourse);
-app.post('/api/v1/updateCourse', auth, updateCourse);
-app.post('/api/v1/updateCourse', auth, deleteCourse);
+app.get('/api/v1/courses', auth, getCourses);
+app.post('/api/v1/updatecourse', auth, updateCourse);
+app.post('/api/v1/deletecourse', auth, deleteCourse);
 
 export const appFunction = https.onRequest(app);
 

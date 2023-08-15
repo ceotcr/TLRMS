@@ -6,9 +6,9 @@ export const getEvents = async (req, res) => {
         if (!req.user) {
             return res.status(401).json({ "msg": "Unauthorized" });
         }
-        const date = req.query.date;
+        const { start, end } = req.body;
         const connection = await dbpool.getConnection();
-        const [rows] = await connection.execute(`SELECT * FROM events WHERE start LIKE '${date}%' OR end LIKE '${date}%'`);
+        const [rows] = await connection.execute(`SELECT * FROM events WHERE start LIKE '${start}%' AND end LIKE '${end}%'`);
         connection.release();
         res.json(rows);
     } catch (err) {

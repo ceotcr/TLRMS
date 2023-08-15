@@ -9,7 +9,8 @@
     "start": "npm run shell",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log",
-    "dev": "nodemon server.js"
+    "dev": "nodemon server.js",
+    "seed": "node seeders/seed.js"
   },
   "engines": {
     "node": "16"

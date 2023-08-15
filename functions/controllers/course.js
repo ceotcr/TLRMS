@@ -1,7 +1,7 @@
 import { dbpool } from "../db.js";
 import mysql from 'mysql2/promise';
 
-export const getCourse = async (req, res) => {
+export const getCourses = async (req, res) => {
     try {
         if (!req.user) {
             return res.status(401).json({ msg: "Unauthorized" });
@@ -37,7 +37,10 @@ export const deleteCourse = async (req, res) => {
         if (!req.user) {
             return res.status(401).json({ msg: "Unauthorized" });
         }
-        const { id } = req.params;
+        const { id } = req.body;
+        if (!id) {
+            return res.status(400).json({ msg: "Please provide course id." });
+        }
         const connection = await dbpool.getConnection();
         const sql = `DELETE FROM course WHERE id = ?`;
         const values = [id];
@@ -54,8 +57,10 @@ export const updateCourse = async (req, res) => {
         if (!req.user) {
             return res.status(401).json({ msg: "Unauthorized" });
         }
-        const { id } = req.params;
-        const { courseName, courseCode, courseDescription } = req.body;
+        const { id, courseName, courseCode, courseDescription } = req.body;
+        if (!id || !courseName || !courseCode || !courseDescription) {
+            return res.status(400).json({ msg: "Please provide all fields." });
+        }
         const connection = await dbpool.getConnection();
         const sql = `UPDATE course SET courseName = ?, courseCode = ?, courseDescription = ? WHERE id = ?`;
         const values = [courseName, courseCode, courseDescription, id];

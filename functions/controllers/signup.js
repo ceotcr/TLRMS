@@ -9,22 +9,22 @@ import { dbpool } from '../db.js';
 
 async function validateUserInputs(username, email) {
     const connection = await dbpool.getConnection();
-    let sql = `SELECT * FROM users WHERE username = ?`;
-    let values = [username];
-    const [rows] = await connection.execute(sql, values);
-    sql = `SELECT * FROM users WHERE email = ?`;
-    values = [email];
-    const [emailrows] = await connection.execute(sql, values);
-    connection.release();
-    if (rows.length > 0) {
-        return { "status": 400, "msg": "Username already taken." };
-    } else if (emailrows.length > 0) {
-        return { "status": 400, "msg": "Email already in use." };
-    }
-    else {
+
+    try {
+        const q = 'SELECT * FROM users WHERE username = ? OR email = ?';
+        const [rows] = await connection.execute(q, [username, email]);
+
+        if (rows.length > 0) {
+            const message = rows[0].username === username ? 'Username already taken.' : 'Email already in use.';
+            return { status: 400, msg: message };
+        }
+
         return null;
+    } finally {
+        connection.release();
     }
 }
+
 
 export const handleRegister = async (req, res) => {
     try {
@@ -110,13 +110,13 @@ export const handleRegister = async (req, res) => {
             }
         };
 
-        transporter.sendMail(mailOptions, (err, info) => {
-            if (err) {
-                console.log(err);
-                res.status(500).send('An error occurred while sending the email.');
-                return;
-            }
-        });
+        try {
+            await transporter.sendMail(mailOptions);
+        } catch (error) {
+            res.status(500).send(`An error occurred while sending the email. ERROR: ${error}`);
+            return;
+        }
+
         res.send('Please check your email to verify your account.');
     } catch (error) {
         console.error(error);
