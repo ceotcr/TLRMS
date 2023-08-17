@@ -14,8 +14,12 @@ To set up the project locally, follow these steps:
   ```SHELL
     npm install
   ```
-3. Create a `.env` file and configure the necessary environment variables
-4. Start the development server: 
+3. Create a `.env` file and configure the necessary environment variables, see `.env.example` for reference.
+4. Seed the database by running:
+  ```shell
+     npm run seed
+  ```
+5. Start the development server: 
   ```SHELL
     npm run dev
   ```
@@ -86,6 +90,10 @@ The following development scripts are available:
   npm run dev
   ```
   > Starts the server using nodemon for development.
+- ```shell
+  npm run seed
+  ```
+  > Seeds the database (creates required table).
 
 ## Additional Notes
 
